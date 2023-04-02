@@ -4,52 +4,65 @@ const mysql = require('mysql2/promise');
 const pool = mysql.createPool(config.dbConfig);
 
 describe('DB tests', () => {
-let currentCrypto=11
+   let currentCrypto=11;
+   let userTest={
+       name:'test',
+       chat_id:111111,
+       email:'test@gmail.com',
+       password:'12335412245',
+   }
+
     afterAll(() => {
         pool.end();
     });
     it('CREATE USER', async () => {
+        let data
             try {
                 let [rows] = await pool.query(
-                    "INSERT INTO user.users (name, chat_id,email, password) VALUES (?, ?,?,?)",
-                    ['test', 111111,'test@gmail.com', '12335412245']
+                    "INSERT INTO user.users (name, chat_id,email, password) VALUES ('test', 111111,'test@gmail.com','12335412245') "
                 );
-                console.log(rows);
+                data='successfully'
             }
             catch (e) {
+                data='no successfully'
                 console.error(e);
             }
 
-        expect("Welcome to my bot!").toBe('Welcome to my bot!');
+        expect(data).toBe("successfully");
     });
     it('FIND USER by chat_id', async () => {
+        let user
         try {
             let [rows] = await pool.query(
-                'SELECT * FROM user.users WHERE chat_id=111111'
+                'SELECT name, chat_id,email, password FROM user.users WHERE chat_id=111111'
             );
-            console.log(rows);
+            user=rows[0]
         }
         catch (e) {
             console.error(e);
         }
+        console.log(user);
 
-        expect("Welcome to my bot!").toBe('Welcome to my bot!');
+        expect(user).toStrictEqual(userTest);
     });
 
     it('CREATE CURRENT CRYPTO', async () => {
+        let data
         try {
             let [rows] = await pool.query(
                 `INSERT INTO user.crypto (current , nikCrypto) VALUES (?, ?)
-                 ON DUPLICATE KEY update current = ${current}`,
+                 ON DUPLICATE KEY update current = ${currentCrypto}`,
                 [currentCrypto,'BTC']
             );
             console.log(rows);
+            data='successfully'
         }
         catch (e) {
+            data='no successfully'
             console.error(e);
         }
 
-        expect("Welcome to my bot!").toBe('Welcome to my bot!');
+        expect(data).toBe('successfully');
     });
 
     it('FIND CURRENT CRYPTO', async () => {
