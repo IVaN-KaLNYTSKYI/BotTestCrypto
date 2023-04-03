@@ -29,10 +29,10 @@ tg.setMyCommands([
         command:'/eth' ,description:'Курс ETH'
     },
     {
-        command:'/rating' ,description:'3 популярні криптовалюти'
+        command:'/rating' ,description:'Популярні криптовалюти'
     }
     ,{
-        command:'/start' ,description:'START'
+        command:'/start' ,description:'Розпочати роботу з ботом'
     }
 ])
 
@@ -40,7 +40,7 @@ tg.setMyCommands([
 tg.onText(/\/start/, async (msg) => {
     let userInfo = await user.findUser(msg.chat.id);
     if (userInfo) {
-        tg.sendMessage(msg.chat.id, `Доброго дня ${userInfo.name} ви вже зареєстровані.Ваш Email : ${userInfo.email}.`)
+        tg.sendMessage(msg.chat.id, `Доброго дня ${userInfo.name} ви вже зареєстровані . Ваш  email : ${userInfo.email}.`)
     } else {
         tg.sendMessage(msg.chat.id, 'Введіть name:').then(value => {
             register.step = 1

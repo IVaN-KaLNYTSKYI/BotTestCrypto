@@ -7,11 +7,10 @@ function sendCryptoPriceUpdatesETH(tg) {
     axios.get('https://api.coingecko.com/api/v3/simple/price?ids=ethereum&vs_currencies=usd')
         .then(response => {
             crypto.findCrypto('ETH').then(value => {
-                if (value.current !== response.data.ethereum.usd) {
-
+                if (value.current !== Math.floor(response.data.ethereum.usd)) {
                     user.listUsers().then(value1 => {
                         value1.forEach((user) => {
-                            tg.sendMessage( user.chat_id, `Цена ethereum изменилась на з ${value.current} USD на ${response.data.ethereum.usd} USD`);
+                            tg.sendMessage( user.chat_id, `Ціна ethereum змінилася  з ${value.current} USD на ${response.data.ethereum.usd} USD`);
                         })
                     });
                 }
@@ -29,10 +28,10 @@ function sendCryptoPriceUpdatesBTC(tg) {
     axios.get('https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd')
         .then(response => {
             crypto.findCrypto('BTC').then(value => {
-                if (value.current !== response.data.bitcoin.usd) {
+                if (value.current !== Math.floor(response.data.bitcoin.usd)) {
                     user.listUsers().then(value1 => {
                         value1.forEach((user) => {
-                            tg.sendMessage( user.chat_id, `Цена bitcoin изменилась на з ${value.current} USD на ${response.data.bitcoin.usd} USD`);
+                            tg.sendMessage( user.chat_id, `Ціна bitcoin змінилася  з ${value.current} USD на ${response.data.bitcoin.usd} USD`);
                         })
                     });
                 }
@@ -48,10 +47,10 @@ function sendCryptoPriceUpdatesSOL(tg) {
     axios.get('https://api.coingecko.com/api/v3/simple/price?ids=solana&vs_currencies=usd')
         .then(response => {
             crypto.findCrypto('SOL').then(value => {
-                if (value.current !== response.data.solana.usd) {
+                if (value.current !== Math.floor(response.data.solana.usd)) {
                     user.listUsers().then(value1 => {
                         value1.forEach((user) => {
-                            tg.sendMessage( user.chat_id, `Цена solana изменилась на з ${value.current} USD на ${response.data.solana.usd} USD`);
+                            tg.sendMessage( user.chat_id, `Ціна solana змінилася  з ${value.current} USD на ${response.data.solana.usd} USD`);
                         })
                     });
                 }
